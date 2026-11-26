@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RUMAH JOKI — Sekarang Tugasmu Juga adalah Tugas Kami</title>
 <meta name="description" content="RUMAH JOKI — Layanan pendampingan akademik untuk mahasiswa Institut Agama Islam Natuna.">
-<link rel="icon" type="image/jpeg" href="assets/rumah-joki-logo.jpg">
-<link rel="apple-touch-icon" href="assets/rumah-joki-logo.jpg">
+<link rel="icon" type="image/jpeg" href="rumah-joki-logo.jpg">
+<link rel="apple-touch-icon" href="rumah-joki-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -129,6 +129,7 @@ button,input,select,textarea {font:inherit}
   position:relative;
   z-index:2;
 }
+.hero-grid > div {width:100%;min-width:0}
 .eyebrow {
   display:inline-flex;align-items:center;gap:8px;
   padding:8px 13px;border-radius:30px;
@@ -140,13 +141,22 @@ button,input,select,textarea {font:inherit}
   width:7px;height:7px;background:#20a36a;
   border-radius:50%;
 }
-.hero h1 {
+.hero-headline-marquee {width:100%;min-width:0;max-width:100%;overflow:hidden}
+.hero-headline-track {
+  display:flex;
+  width:max-content;
+  animation:headline-marquee 20s linear infinite;
+}
+.hero h1,.hero-headline-copy {
   font-family:Manrope,sans-serif;
   font-size:clamp(38px,5vw,61px);
   line-height:1.13;letter-spacing:-2.8px;
-  color:#fff;margin:23px 0;
+  color:#fff;font-weight:800;
+  width:max-content;flex:0 0 auto;
+  margin:23px 0;padding-right:64px;
+  white-space:nowrap;
 }
-.hero h1 span {color:#e6c982}
+.hero h1 span,.hero-headline-copy span {color:#e6c982}
 .hero-desc {
   font-size:15px;color:#f2f5f8;
   max-width:650px;line-height:1.9;margin:0 auto;
@@ -583,6 +593,74 @@ button,input,select,textarea {font:inherit}
   border-color:var(--navy);
 }
 .form-group textarea {min-height:85px;resize:vertical}
+.payment-box {
+  grid-column:1/-1;
+  display:grid;
+  gap:12px;
+  margin-top:2px;
+  padding:16px;
+  border:1px solid #e3d09d;
+  border-radius:12px;
+  background:#fffaf0;
+}
+.payment-box legend {font-size:12px;font-weight:800;color:var(--navy);padding:0 6px}
+.payment-options {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.payment-option {
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:50px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:800;
+  color:var(--navy);
+}
+.payment-option input {width:auto;accent-color:var(--navy)}
+.qris-badge {
+  margin-left:auto;
+  padding:4px 7px;
+  border-radius:6px;
+  background:#d81f26;
+  color:#fff;
+  font-size:9px;
+  letter-spacing:.4px;
+}
+.qris-details {display:grid;grid-template-columns:180px 1fr;gap:14px;align-items:start}
+.qris-details[hidden] {display:none}
+.qris-preview {
+  display:grid;
+  place-items:center;
+  min-height:180px;
+  border:1px dashed #b9a873;
+  border-radius:10px;
+  background:#fff;
+  overflow:hidden;
+  color:#7a6b45;
+  text-align:center;
+  font-size:10px;
+  line-height:1.6;
+  padding:10px;
+}
+.qris-preview img {display:block;width:100%;max-height:180px;object-fit:contain}
+.qris-visual {display:grid;gap:8px}
+.qris-download {
+  display:block;
+  padding:9px 10px;
+  border-radius:8px;
+  background:var(--navy);
+  color:#fff;
+  text-align:center;
+  font-size:11px;
+  font-weight:800;
+}
+.qris-download:hover {background:var(--navy2);color:#fff}
+.qris-fields {display:grid;gap:10px}
+.qris-fields .form-group input {padding:10px}
 .submit-btn {
   margin-top:18px;width:100%;border:0;
   padding:14px;border-radius:10px;background:var(--navy);
@@ -647,6 +725,10 @@ footer {
   from {opacity:.45}
   to {opacity:.8}
 }
+@keyframes headline-marquee {
+  from {transform:translateX(-50%)}
+  to {transform:translateX(0)}
+}
 @keyframes decoration-turn {
   to {transform:rotate(360deg)}
 }
@@ -684,7 +766,7 @@ footer {
   .order-grid {gap:30px}
 }
 @media(max-width:540px) {
-  .hero h1 {letter-spacing:-1.7px}
+  .hero h1,.hero-headline-copy {letter-spacing:-1.7px}
   .hero-search {gap:5px}
   .hero-search button {padding:12px 13px}
   .service-grid {grid-template-columns:1fr}
@@ -693,6 +775,10 @@ footer {
   .steps {grid-template-columns:1fr 1fr}
   .form-grid {grid-template-columns:1fr}
   .form-group.full {grid-column:auto}
+  .payment-options {grid-template-columns:1fr}
+  .qris-details {grid-template-columns:1fr}
+  .qris-preview {width:min(220px,100%);min-height:220px;margin:auto}
+  .qris-preview img {max-height:220px}
   .order-form {padding:20px}
   .story-visual {padding:25px;min-height:280px}
   .footer-grid {grid-template-columns:1fr 1fr}
@@ -741,7 +827,12 @@ footer {
   <div class="container hero-grid">
     <div>
       <div class="eyebrow"><i></i><span id="heroEyebrowText">PROMO TERBATAS</span></div>
-      <h1 id="heroHeadline">Joki Skripsi Sekarang, <span>Hemat Rp1 Juta!</span></h1>
+      <div class="hero-headline-marquee">
+        <div class="hero-headline-track">
+          <h1 id="heroHeadline">Joki Skripsi Sekarang, <span>Hemat Rp.1 juta!</span></h1>
+          <div class="hero-headline-copy" aria-hidden="true">Joki Skripsi Sekarang, <span>Hemat Rp.1 juta!</span></div>
+        </div>
+      </div>
       <p class="hero-desc" id="heroDescription">
         Selain promo pendampingan skripsi, tersedia juga bantuan artikel jurnal
         SINTA 2, 3, 4, dan 5 serta berbagai tugas kuliah lainnya. Konsultasikan
@@ -1043,6 +1134,39 @@ footer {
           <p class="file-help">Opsional. Pilih satu atau beberapa file. Setelah WhatsApp terbuka, lampirkan file yang dipilih secara manual di percakapan.</p>
           <p class="file-list" id="fileList" aria-live="polite">Belum ada file dipilih.</p>
         </div>
+        <fieldset class="payment-box">
+          <legend>Metode Pembayaran</legend>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="metodePembayaran" value="QRIS" checked>
+              QRIS <span class="qris-badge">QRIS</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="metodePembayaran" value="Menunggu Konfirmasi Admin">
+              Bayar nanti
+            </label>
+          </div>
+          <div class="qris-details" id="qrisDetails">
+            <div class="qris-visual">
+              <div class="qris-preview" id="qrisPreview">
+                <span>QRIS merchant<br>akan ditambahkan admin</span>
+                <img id="qrisImage" alt="Kode QRIS RUMAH JOKI" hidden>
+              </div>
+              <a class="qris-download" href="qris-rumah-joki.png" download="qris-rumah-joki.png">Unduh Foto QRIS ↓</a>
+            </div>
+            <div class="qris-fields">
+              <div class="form-group">
+                <label for="nominalPembayaran">Nominal Pembayaran (Rp)</label>
+                <input type="number" id="nominalPembayaran" min="0" step="1000" placeholder="Contoh: 500000">
+              </div>
+              <div class="form-group">
+                <label for="buktiPembayaran">Lampirkan Bukti Pembayaran</label>
+                <input type="file" id="buktiPembayaran" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf">
+                <p class="file-help">JPG, PNG, atau PDF. Bukti juga dapat dikirim langsung di WhatsApp.</p>
+              </div>
+            </div>
+          </div>
+        </fieldset>
         <div class="form-group full">
           <label>Detail Kebutuhan *</label>
           <textarea id="detail" placeholder="Ceritakan tugas atau kebutuhan akademikmu secara singkat..." required></textarea>
@@ -1146,7 +1270,7 @@ const services = [
   {name:"Makalah",category:"tugas",icon:"file-text",tag:"Tugas Kuliah",desc:"Pendampingan penyusunan makalah, mulai dari struktur tulisan hingga pengembangan pembahasan.",price:"Rp 35.000"},
   {name:"Artikel Ilmiah",category:"tugas",icon:"file",tag:"Tugas Kuliah",desc:"Pendampingan memahami struktur dan menyunting paper atau artikel akademik.",price:"Rp 50.000"},
   {name:"Ringkasan Materi",category:"tugas",icon:"book-open",tag:"Tugas Kuliah",desc:"Ringkasan materi perkuliahan yang terstruktur dan mudah dipelajari.",price:"Rp 25.000"},
-  {name:"Artikel Jurnal Sinta 4",category:"tugas",icon:"search",tag:"Tugas Kuliah",desc:"Pendampingan membaca, memahami, dan mengulas artikel jurnal ilmiah.",price:"Rp 1.850.000"},
+  {name:"Artikel Jurnal Sinta 4",category:"tugas",icon:"search",tag:"Tugas Kuliah",desc:"jurnal sinta 4, jurnal, dan mengulas artikel jurnal ilmiah sinta 4.",price:"Rp 1.850.000"},
   {name:"Artikel Jurnal Sinta 3",category:"tugas",icon:"search",tag:"Tugas Kuliah",desc:"Pendampingan membaca, memahami, dan mengulas artikel jurnal ilmiah.",price:"Rp 4.000.000"},
   {name:"Sinopsis sampai ACC",category:"tugas",icon:"book-check",tag:"Tugas Kuliah",desc:"Pendampingan memahami buku akademik dan menyusun ulasan kritis.",price:"Rp 100.000"},
   {name:"Daftar Isi Otomatis",category:"tugas",icon:"newspaper",tag:"Tugas Kuliah",desc:"Pendampingan menganalisis dan menyusun ulasan kritis artikel jurnal.",price:"Rp 10.000"},
@@ -1161,10 +1285,10 @@ const services = [
   {name:"Format Skripsi",category:"skripsi",icon:"ruler",tag:"Skripsi",desc:"Penyesuaian margin, judul, daftar isi, kutipan, dan format dokumen sesuai panduan.",price:"Rp 60.000"},
   {name:"Artikel Jurnal Ilmiah",category:"skripsi",icon:"article",tag:"Jurnal",desc:"Pendampingan struktur artikel, penyuntingan, dan penyesuaian dengan templat jurnal.",price:"Rp 50.000"},
   {name:"Publikasi SINTA 2",category:"skripsi",icon:"award",tag:"Jurnal SINTA",desc:"Informasi pemilihan jurnal, persiapan naskah, dan proses pengiriman artikel.",price:"Rp 7.500.000",featuredOrder:1},
-  {name:"RPP atau Modul Ajar",category:"pendidikan",icon:"book",tag:"Pendidikan",desc:"Pendampingan penyusunan perangkat pembelajaran sesuai kebutuhan.",price:"Rp 25.000"},
+  {name:"RPP, RPPH, RPM, atau Modul Ajar",category:"pendidikan",icon:"book",tag:"Pendidikan",desc:"Pendampingan penyusunan perangkat pembelajaran sesuai kebutuhan.",price:"Rp 25.000"},
   {name:"Lembar Kerja Peserta Didik (LKPD)",category:"pendidikan",icon:"worksheet",tag:"Pendidikan",desc:"Pendampingan penyusunan dan penyuntingan lembar kerja peserta didik.",price:"Rp 25.000"},
   {name:"RPPH atau RPPM PAUD",category:"pendidikan",icon:"blocks",tag:"Pendidikan",desc:"Pendampingan penyusunan perangkat pembelajaran untuk PAUD.",price:"Rp 25.000"},
-  {name:"Laporan Magang atau PKL",category:"lainnya",icon:"building",tag:"Laporan",desc:"Pendampingan penyusunan struktur, penyuntingan, dan pemformatan laporan kegiatan.",price:"Rp 200.000",featuredOrder:2},
+  {name:"Laporan Magang atau PKL",category:"lainnya",icon:"building",tag:"Laporan",desc:"laporan magang, laporan praktik kerja lapangan (PKL),laporan  dan pemformatan laporan kegiatan.",price:"Rp 200.000",featuredOrder:2},
   {name:"Laporan KKN",category:"lainnya",icon:"sprout",tag:"Laporan",desc:"Pendampingan penyusunan laporan kegiatan KKN individu maupun kelompok.",price:"Rp 200.000"},
   {name:"Laporan Observasi",category:"lainnya",icon:"eye",tag:"Laporan",desc:"Pendampingan penyusunan laporan hasil observasi dan dokumentasi kegiatan.",price:"Rp 50.000"},
   {name:"Daftar Pustaka dan Mendeley",category:"lainnya",icon:"library",tag:"Referensi",desc:"Pendampingan mengelola referensi, sitasi, dan daftar pustaka.",price:"Rp 35.000"},
@@ -1367,6 +1491,7 @@ function expirePromos() {
 
   document.getElementById("heroEyebrowText").textContent = "LAYANAN AKADEMIK";
   document.getElementById("heroHeadline").textContent = "Pendampingan Akademik untuk Kebutuhanmu";
+  document.querySelector(".hero-headline-copy").textContent = "Pendampingan Akademik untuk Kebutuhanmu";
   document.getElementById("heroDescription").textContent =
     "Tersedia pendampingan artikel jurnal SINTA 2, 3, 4, dan 5 serta berbagai tugas kuliah lainnya. Konsultasikan kebutuhanmu bersama RUMAH JOKI sebelum memesan.";
 }
@@ -1434,6 +1559,34 @@ documentInput.addEventListener("change", () => {
     : "Belum ada file dipilih.";
 });
 
+// KONFIGURASI QRIS MERCHANT
+// Ganti dengan lokasi gambar QRIS resmi milik RUMAH JOKI, misalnya "qris-rumah-joki.png".
+const qrisImageUrl = "qris-rumah-joki.png";
+const qrisImage = document.getElementById("qrisImage");
+const qrisPreview = document.getElementById("qrisPreview");
+
+if (qrisImageUrl) {
+  qrisImage.src = qrisImageUrl;
+  qrisImage.hidden = false;
+  qrisPreview.querySelector("span").hidden = true;
+}
+
+const qrisDetails = document.getElementById("qrisDetails");
+document.querySelectorAll('input[name="metodePembayaran"]').forEach(input => {
+  input.addEventListener("change", () => {
+    qrisDetails.hidden = input.value !== "QRIS";
+  });
+});
+
+const buktiPembayaran = document.getElementById("buktiPembayaran");
+buktiPembayaran.addEventListener("change", () => {
+  const file = buktiPembayaran.files[0];
+  if (file && !/\.(jpg|jpeg|png|pdf)$/i.test(file.name)) {
+    buktiPembayaran.value = "";
+    alert("Format bukti tidak didukung. Pilih JPG, PNG, atau PDF.");
+  }
+});
+
 // FORM KE WHATSAPP
 document.getElementById("orderForm").addEventListener("submit", function(e) {
   e.preventDefault();
@@ -1445,9 +1598,18 @@ document.getElementById("orderForm").addEventListener("submit", function(e) {
   const deadline = document.getElementById("deadline").value || "Belum ditentukan";
   const detail = document.getElementById("detail").value.trim();
   const files = Array.from(documentInput.files);
+  const metodePembayaran = document.querySelector('input[name="metodePembayaran"]:checked').value;
+  const nominalPembayaran = document.getElementById("nominalPembayaran").value;
+  const buktiFile = buktiPembayaran.files[0];
   const daftarFile = files.length
     ? files.map(file => `- ${file.name}`).join("\n")
     : "Tidak ada";
+  const nominalText = metodePembayaran === "QRIS" && nominalPembayaran
+    ? `Rp${Number(nominalPembayaran).toLocaleString("id-ID")}`
+    : "Belum ditentukan";
+  const buktiText = metodePembayaran === "QRIS"
+    ? (buktiFile ? buktiFile.name : "Belum dilampirkan")
+    : "Tidak perlu saat ini";
 
   const pesan =
 `Halo RUMAH JOKI, saya ingin konsultasi layanan.
@@ -1464,6 +1626,12 @@ ${detail}
 File pendukung:
 ${daftarFile}
 ${files.length ? "\nSaya akan melampirkan file tersebut langsung di chat WhatsApp." : ""}
+
+Metode pembayaran:
+${metodePembayaran}
+Nominal: ${nominalText}
+Bukti pembayaran: ${buktiText}
+${metodePembayaran === "QRIS" && buktiFile ? "\nSaya akan melampirkan bukti pembayaran tersebut langsung di chat WhatsApp." : ""}
 
 Mohon informasi lebih lanjut mengenai layanan dan biayanya. Terima kasih.`;
 
