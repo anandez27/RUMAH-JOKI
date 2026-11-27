@@ -159,30 +159,46 @@ button,input,select,textarea {font:inherit}
 .hero h1 span,.hero-headline-copy span {color:#e6c982}
 .hero-desc {
   font-size:15px;color:#f2f5f8;
-  max-width:650px;line-height:1.9;margin:0 auto;
+  max-width:650px;line-height:1.9;margin:0 auto;text-align:center;
 }
+.hero-desc strong {color:#ffe08a;font-weight:800}
 .hero-search {
   display:flex;align-items:center;gap:8px;
-  max-width:560px;margin:26px auto 0;padding:6px;
-  border:1px solid rgba(14,30,45,.14);border-radius:14px;
-  background:#fff;box-shadow:0 12px 32px rgba(14,30,45,.09);
-  transition:border-color .2s,box-shadow .2s;
+  max-width:620px;min-height:68px;margin:26px auto 0;padding:7px;
+  border:1px solid rgba(255,255,255,.24);border-radius:18px;
+  background:rgba(255,255,255,.1);
+  box-shadow:0 18px 42px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.2);
+  backdrop-filter:blur(20px) saturate(1.3);
+  -webkit-backdrop-filter:blur(20px) saturate(1.3);
+  transition:border-color .2s,box-shadow .2s,background .2s;
 }
-.hero-search:focus-within {border-color:var(--navy);box-shadow:0 0 0 4px rgba(14,30,45,.1),0 12px 32px rgba(14,30,45,.08)}
-.hero-search-icon {width:20px;height:20px;flex:0 0 auto;margin-left:12px;color:#4b5967}
+.hero-search:focus-within {
+  border-color:rgba(230,201,130,.7);background:rgba(255,255,255,.14);
+  box-shadow:0 0 0 4px rgba(230,201,130,.16),0 20px 46px rgba(0,0,0,.22);
+}
+.hero-search-icon {width:20px;height:20px;flex:0 0 auto;margin-left:12px;color:#b18a3d}
 .hero-search .search-box {
-  flex:1;min-width:0;width:auto;
-  border:0;background:transparent;padding:12px 4px;
+  flex:1;min-width:0;width:auto;min-height:50px;
+  border:0;background:transparent;padding:12px 6px;
+  color:#fff;font-size:14px;font-weight:600;
   box-shadow:none;
 }
+.hero-search .search-box::placeholder {color:rgba(255,255,255,.68);opacity:1}
 .hero-search .search-box:focus {border-color:transparent;box-shadow:none}
 .hero-search button {
-  flex:0 0 auto;border:0;border-radius:10px;
-  background:var(--navy);color:#fff;
-  padding:12px 17px;font-size:12px;font-weight:800;
-  cursor:pointer;transition:background .2s,transform .2s;
+  display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 auto;min-height:50px;border:1px solid rgba(255,255,255,.25);border-radius:12px;
+  background:rgba(255,255,255,.12);color:#ffe08a;
+  padding:0 20px;font-size:12px;font-weight:800;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24);
+  backdrop-filter:blur(12px);
+  cursor:pointer;transition:filter .2s,transform .2s,box-shadow .2s;
 }
-.hero-search button:hover {background:var(--navy2);transform:translateY(-1px)}
+.hero-search button:hover {
+  background:rgba(255,255,255,.2);transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.3);
+}
+.hero-search button:focus-visible {outline:3px solid rgba(241,201,106,.48);outline-offset:2px}
 .hero-actions {display:flex;justify-content:center;gap:12px;margin-top:30px;flex-wrap:wrap}
 .btn-primary {
   background:#d1ad69;color:#101d2a;
@@ -201,6 +217,23 @@ button,input,select,textarea {font:inherit}
 .btn-secondary:hover {transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.18);border-color:rgba(255,255,255,.65);background:rgba(255,255,255,.12)}
 .hero-note {margin-top:24px;font-size:12px;color:#f2f5f8}
 .hero-note strong {color:#fff}
+.promo-carousel {
+  display:flex;
+  gap:16px;
+  width:100%;
+  overflow-x:auto;
+  padding:8px 4px 18px;
+  overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;
+  scrollbar-color:#d1ad69 rgba(255,255,255,.14);
+  scrollbar-width:thin;
+}
+.promo-carousel > .promo-card {
+  flex:0 0 min(100%,42rem);
+  width:auto;
+  margin:0;
+  scroll-snap-align:start;
+}
 .promo-card {
   position:relative;
   isolation:isolate;
@@ -306,49 +339,100 @@ button,input,select,textarea {font:inherit}
 .wa-float:hover {transform:translateY(-4px) scale(1.06);box-shadow:0 12px 30px rgba(0,0,0,.2)}
 
 @media(max-width:575px) {
+  .promo-carousel > .promo-card {flex-basis:88%}
   .promo-card {grid-template-columns:1fr;gap:20px;padding:22px}
   .promo-pricing {border-left:0;border-top:1px solid rgba(255,255,255,.2);padding:17px 0 0}
 }
 /* FEATURED SERVICES */
 .featured-services {
+  position:relative;isolation:isolate;overflow:hidden;
   padding:76px 0;
-  background:linear-gradient(135deg,rgba(209,173,105,.16),rgba(255,255,255,.12));
+  background:
+    radial-gradient(circle at 8% 18%,rgba(209,173,105,.22),transparent 19rem),
+    radial-gradient(circle at 92% 78%,rgba(92,139,170,.24),transparent 22rem),
+    linear-gradient(145deg,#0b1723 0%,#17324a 56%,#0e1e2d 100%);
 }
-.featured-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.featured-grid {
+  display:flex;gap:18px;overflow-x:auto;
+  padding:8px 4px 18px;
+  overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.featured-grid::-webkit-scrollbar {
+  display:none;
+}
+.featured-grid > .featured-service-card {
+  flex:0 0 min(390px,88%);
+  scroll-snap-align:start;
+}
 .featured-service-card {
+  position:relative;isolation:isolate;overflow:hidden;
   display:flex;flex-direction:column;min-height:250px;padding:24px;
-  border:1px solid rgba(200,160,90,.38);border-radius:18px;
-  background:linear-gradient(145deg,#17324a 0%,#0b1723 100%);
-  box-shadow:0 12px 28px rgba(14,30,45,.14);
-  transition:transform .25s,box-shadow .25s,border-color .25s;
+  border:1px solid rgba(255,255,255,.2);border-radius:22px;
+  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055));
+  box-shadow:0 16px 36px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.18);
+  backdrop-filter:blur(18px) saturate(1.25);
+  -webkit-backdrop-filter:blur(18px) saturate(1.25);
+  transition:transform .25s,box-shadow .25s,border-color .25s,background .25s;
+}
+.featured-service-card::before {
+  content:"";position:absolute;z-index:-1;inset:0;border-radius:inherit;
+  background:radial-gradient(circle at 100% 0,rgba(230,201,130,.2),transparent 55%);
+  pointer-events:none;
+}
+.featured-service-card::after {
+  content:"";position:absolute;top:0;left:22px;right:22px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);
+  pointer-events:none;
 }
 .featured-service-card:hover {
-  transform:translateY(-5px);border-color:var(--gold);
-  box-shadow:0 18px 36px rgba(14,30,45,.22);
+  transform:translateY(-5px);
+  border-color:rgba(230,201,130,.62);
+  background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(255,255,255,.075));
+  box-shadow:0 22px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.24);
 }
+.featured-services .section-heading h2 {color:#fff}
+.featured-services .section-heading p {
+  color:#f2f5f8;text-shadow:0 1px 2px rgba(0,0,0,.28);
+}
+.featured-services .section-heading .label {color:#e6c982}
 .featured-card-top {display:flex;align-items:center;justify-content:space-between;gap:12px}
 .featured-card-icon {
   width:48px;height:48px;display:grid;place-items:center;flex:0 0 auto;
-  border:1px solid rgba(230,201,130,.25);border-radius:14px;
-  background:rgba(209,173,105,.14);color:#e6c982;
+  border:1px solid rgba(255,255,255,.24);border-radius:16px;
+  background:linear-gradient(145deg,rgba(230,201,130,.24),rgba(255,255,255,.08));color:#f2d98f;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px rgba(0,0,0,.12);
+  backdrop-filter:blur(12px);
 }
 .featured-card-icon svg {width:24px;height:24px}
 .featured-card-tag {
-  padding:6px 10px;border:1px solid rgba(230,201,130,.3);border-radius:20px;
-  color:#f0d998;font-size:10px;font-weight:800;letter-spacing:.4px;
+  padding:6px 10px;border:1px solid rgba(255,255,255,.18);border-radius:20px;
+  background:rgba(8,20,31,.34);color:#fff0bd;
+  border-color:rgba(255,255,255,.3);
+  font-size:10px;font-weight:800;letter-spacing:.4px;
+  text-shadow:0 1px 2px rgba(0,0,0,.35);
 }
 .featured-service-card h3 {
   margin:20px 0 8px;color:#fff;font-family:Manrope,sans-serif;
-  font-size:17px;line-height:1.4;
+  font-size:17px;line-height:1.4;font-weight:800;
+  text-shadow:0 1px 3px rgba(0,0,0,.35);
 }
-.featured-service-card p {margin:0 0 22px;color:#f2f5f8;font-size:12px;line-height:1.8}
+.featured-service-card p {
+  margin:0 0 22px;color:#f2f5f8;
+  font-size:12px;font-weight:500;line-height:1.8;
+  text-shadow:0 1px 2px rgba(0,0,0,.3);
+}
 .featured-service-action {
   align-self:flex-start;margin-top:auto;padding:10px 13px;
-  border:0;border-radius:9px;background:var(--gold);color:var(--navy);
+  border:1px solid rgba(255,255,255,.34);border-radius:11px;
+  background:linear-gradient(135deg,rgba(255,220,115,.96),rgba(239,183,53,.84));color:var(--navy);
   font-size:11px;font-weight:800;cursor:pointer;
-  transition:background .2s,transform .2s;
+  box-shadow:0 7px 16px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.55);
+  transition:filter .2s,transform .2s,box-shadow .2s;
 }
-.featured-service-action:hover {background:#e2c482;transform:translateY(-2px)}
+.featured-service-action:hover {filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.65)}
 
 /* STORY */
 .section {padding:85px 0}
@@ -370,18 +454,36 @@ button,input,select,textarea {font:inherit}
   line-height:1.25;letter-spacing:-1.4px;margin:12px 0;
 }
 .section-heading p {font-size:14px;color:var(--muted);line-height:1.9}
-.story-grid {display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.story-grid {
+  display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:stretch;
+  padding:18px;border:1px solid rgba(255,255,255,.62);border-radius:30px;
+  background:linear-gradient(145deg,rgba(255,255,255,.32),rgba(255,255,255,.14));
+  box-shadow:0 24px 60px rgba(14,30,45,.12),inset 0 1px 0 rgba(255,255,255,.86);
+  backdrop-filter:blur(24px) saturate(1.35);
+  -webkit-backdrop-filter:blur(24px) saturate(1.35);
+}
 .story-visual {
   background:
-    radial-gradient(circle at 92% 15%, rgba(200,160,90,.2), transparent 9rem),
-    linear-gradient(145deg, #17324a 0%, #0b1723 100%);
-  border:1px solid rgba(200,160,90,.28);
-  border-radius:20px;
+    radial-gradient(circle at 92% 15%,rgba(241,201,106,.24),transparent 9rem),
+    linear-gradient(145deg,rgba(23,50,74,.76),rgba(11,23,35,.68));
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:26px;
   padding:35px;min-height:310px;position:relative;
   overflow:hidden;
-  transition:transform .35s,box-shadow .35s;
+  box-shadow:0 18px 40px rgba(8,20,31,.2),inset 0 1px 0 rgba(255,255,255,.24);
+  backdrop-filter:blur(24px) saturate(1.3);
+  -webkit-backdrop-filter:blur(24px) saturate(1.3);
+  transition:transform .35s,box-shadow .35s,border-color .35s;
 }
-.story-visual:hover {transform:translateY(-4px);box-shadow:0 18px 40px rgba(14,30,45,.13)}
+.story-visual::before {
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.16),transparent 45%);
+}
+.story-visual:hover {
+  transform:translateY(-4px);
+  box-shadow:0 22px 44px rgba(8,20,31,.24),inset 0 1px 0 rgba(255,255,255,.18);
+  border-color:rgba(241,201,106,.55);
+}
 .story-visual h3 {
   font-family:Manrope,sans-serif;color:#fff;
   font-size:27px;line-height:1.35;max-width:350px;
@@ -393,13 +495,25 @@ button,input,select,textarea {font:inherit}
   font-size:85px;opacity:.13;
   animation:decoration-turn 24s linear infinite;
 }
+.story-text {
+  padding:30px;border:1px solid rgba(255,255,255,.78);border-radius:26px;
+  background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,255,255,.36));
+  box-shadow:0 16px 34px rgba(14,30,45,.09),inset 0 1px 0 rgba(255,255,255,.95);
+  backdrop-filter:blur(24px) saturate(1.35);
+  -webkit-backdrop-filter:blur(24px) saturate(1.35);
+}
+.story-text .label {color:var(--gold-ink)}
+.story-text .section-heading {max-width:none;margin-bottom:18px}
 .story-text p {font-size:14px;color:var(--muted);line-height:2;margin-bottom:17px}
-.story-text strong {color:var(--navy)}
+.story-text strong {color:#8f6a20}
 .story-points {display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
 .story-point {
-  background:#fff;border:1px solid var(--line);
-  border-radius:12px;padding:14px;font-size:12px;
+  background:rgba(255,255,255,.46);border:1px solid rgba(255,255,255,.78);
+  border-radius:15px;padding:13px;font-size:12px;
   color:var(--navy);font-weight:700;
+  box-shadow:0 8px 18px rgba(14,30,45,.06),inset 0 1px 0 rgba(255,255,255,.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
 }
 
 /* SERVICES */
@@ -436,7 +550,7 @@ button,input,select,textarea {font:inherit}
   display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;
   padding:9px 13px;border:1px solid rgba(255,255,255,.2);
   border-radius:30px;background:rgba(255,255,255,.08);
-  font-size:11px;font-weight:700;color:#e1e7ed;cursor:pointer;
+  font-size:11px;font-weight:700;color:#f4f6f8;cursor:pointer;
   transition:.2s;
 }
 .filter-btn.active,.filter-btn:hover {
@@ -444,32 +558,66 @@ button,input,select,textarea {font:inherit}
 }
 .filter-count {
   min-width:19px;padding:1px 5px;border-radius:20px;
-  background:rgba(255,255,255,.15);color:#e1e7ed;text-align:center;font-size:9px;
+  background:rgba(255,255,255,.2);color:#fff;text-align:center;font-size:9px;
 }
 .filter-btn.active .filter-count,.filter-btn:hover .filter-count {
   background:rgba(14,30,45,.13);color:var(--navy);
 }
 .service-grid {
-  display:grid;grid-template-columns:repeat(3,1fr);gap:17px;
+  display:flex;flex-direction:column;gap:26px;
+}
+.service-group {min-width:0}
+.service-group-heading {
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;
+}
+.service-group-heading h3 {
+  margin:0;color:#fff;font-size:15px;font-weight:800;letter-spacing:.1px;
+}
+.service-group-heading span {
+  color:#d5dee7;font-size:11px;font-weight:600;
+}
+.service-row {
+  display:flex;gap:16px;overflow-x:auto;
+  padding:2px 4px 14px;
+  overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory;
+  scrollbar-color:#d1ad69 rgba(255,255,255,.14);
+  scrollbar-width:thin;
+}
+.service-row > .service-card {
+  flex:0 0 min(300px,85%);
+  scroll-snap-align:start;
 }
 .service-card {
-  background:linear-gradient(145deg,#fff 0%,#f8fafc 100%);
-  border:1px solid rgba(226,177,49,.42);border-top:4px solid #efb735;
-  border-radius:18px;padding:19px 21px 21px;
-  box-shadow:0 12px 28px rgba(2,15,34,.16);
-  transition:transform .25s,box-shadow .25s,border-color .25s;
-  display:flex;flex-direction:column;min-width:0;
+  position:relative;isolation:isolate;overflow:hidden;
+  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:20px;padding:22px;
+  box-shadow:0 14px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.07);
+  backdrop-filter:blur(12px);
+  transition:transform .25s,box-shadow .25s,border-color .25s,background .25s;
+  display:flex;flex-direction:column;min-width:0;min-height:270px;
   animation:card-enter .5s both;
+}
+.service-card::before {
+  content:"";position:absolute;z-index:-1;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,#f1c96a,transparent);
+  opacity:.8;
 }
 .service-card:nth-child(3n + 2) {animation-delay:.06s}
 .service-card:nth-child(3n) {animation-delay:.12s}
-.service-card:hover {transform:translateY(-6px);box-shadow:0 22px 42px rgba(2,15,34,.25);border-color:#e4a916}
+.service-card:hover {
+  transform:translateY(-6px);
+  background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.065));
+  box-shadow:0 22px 44px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);
+  border-color:rgba(241,201,106,.7);
+}
 .service-top {display:flex;justify-content:space-between;align-items:center;gap:10px}
 .service-icon {
-  width:46px;height:46px;border-radius:14px;
-  background:linear-gradient(135deg,#ffdc73,#efb735);display:grid;place-items:center;
+  width:48px;height:48px;border-radius:15px;
+  background:linear-gradient(145deg,#ffe28a,#efb735);display:grid;place-items:center;
   color:#102337;flex:0 0 auto;
-  box-shadow:0 5px 12px rgba(171,120,23,.2);
+  box-shadow:0 8px 18px rgba(209,173,105,.24),inset 0 1px 0 rgba(255,255,255,.55);
   transition:transform .25s;
 }
 .service-card:hover .service-icon {transform:rotate(-5deg) scale(1.06)}
@@ -477,24 +625,31 @@ button,input,select,textarea {font:inherit}
 .service-icon svg * {vector-effect:non-scaling-stroke}
 .service-tag {
   max-width:65%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  background:rgba(241,201,106,.18);border:1px solid rgba(255,255,255,.24);
+  color:#fff0bd;font-size:9px;font-weight:800;padding:7px 10px;border-radius:20px;
+  letter-spacing:.25px;
 }
-.service-tag {
-  background:#fff0c2;color:#102337;
-  font-size:9px;font-weight:800;padding:6px 9px;border-radius:20px;
+.service-card h4 {
+  font-size:16px;color:#fff;margin:18px 0 8px;line-height:1.45;
+  font-weight:800;letter-spacing:-.15px;text-shadow:0 1px 3px rgba(0,0,0,.35);
 }
-.service-card h3 {font-size:15px;color:#091522;margin:16px 0 7px;line-height:1.45}
-.service-card p {font-size:11px;color:#172737;line-height:1.8;flex:1}
+.service-card p {
+  font-size:12px;color:#f2f5f8;font-weight:500;line-height:1.75;
+  flex:1;margin-bottom:20px;text-shadow:0 1px 2px rgba(0,0,0,.3);
+}
 .service-bottom {
   display:flex;justify-content:space-between;align-items:center;
-  border-top:1px solid var(--line);padding-top:15px;margin-top:18px;
+  gap:12px;margin-top:auto;padding:13px 14px;
+  border:1px solid rgba(255,255,255,.09);border-radius:15px;
+  background:rgba(4,14,24,.24);
 }
-.price {font-size:11px;color:#172737}
-.price strong {display:block;color:#091522;font-size:14px}
+.price {font-size:11px;color:#d6e0e8;font-weight:600;letter-spacing:.2px}
+.price strong {display:block;margin-top:3px;color:#ffe08a;font-size:15px;letter-spacing:.1px}
 .order-small {
-  background:#efb735;color:#102337;border:0;
-  padding:9px 12px;border-radius:8px;font-size:10px;
+  background:linear-gradient(135deg,#ffdc73,#efb735);color:#102337;border:1px solid rgba(255,255,255,.24);
+  padding:10px 14px;border-radius:10px;font-size:10px;
   font-weight:800;cursor:pointer;
-  box-shadow:0 4px 10px rgba(171,120,23,.2);
+  box-shadow:0 5px 13px rgba(209,173,105,.2);
   transition:background .2s,transform .2s,box-shadow .2s;
 }
 .order-small:hover {background:#ffd45a;transform:translateY(-2px);box-shadow:0 7px 14px rgba(171,120,23,.28)}
@@ -508,30 +663,6 @@ button,input,select,textarea {font:inherit}
   border:0;background:var(--gold);color:var(--navy);border-radius:8px;
   padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer;
 }
-
-/* WHY US */
-.why-grid {display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
-.why-card {
-  padding:23px;background:white;border:1px solid var(--line);
-  border-radius:15px;
-  transition:transform .25s,box-shadow .25s,border-color .25s;
-}
-.why-card:hover {transform:translateY(-5px);box-shadow:var(--shadow);border-color:#d6dce8}
-.why-card div {font-size:25px;margin-bottom:15px}
-.why-card h3 {font-size:14px;color:var(--navy);margin-bottom:8px}
-.why-card p {font-size:11px;color:var(--muted);line-height:1.8}
-
-/* STEPS */
-.steps {display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.step {position:relative;padding:22px;border:1px solid #ded5c4;border-radius:15px;background:rgba(255,255,255,.5);transition:transform .25s,background .25s,box-shadow .25s}
-.step:hover {transform:translateY(-4px);background:#fff;box-shadow:var(--shadow)}
-.step-number {
-  width:35px;height:35px;background:var(--gold);
-  color:var(--navy);border-radius:10px;display:grid;place-items:center;
-  font-size:13px;font-weight:800;margin-bottom:17px;
-}
-.step h3 {font-size:14px;color:var(--navy);margin-bottom:7px}
-.step p {font-size:11px;color:var(--muted);line-height:1.8}
 
 /* ORDER FORM */
 .order-section {
@@ -561,9 +692,6 @@ button,input,select,textarea {font:inherit}
   line-height:1.2;letter-spacing:-1px;margin:13px 0 17px;
 }
 .order-info p {font-size:13px;color:#f2f5f8;line-height:1.9}
-.order-benefit {margin-top:25px;display:grid;gap:13px}
-.order-benefit div {font-size:12px;color:#e4e9ef}
-.order-benefit span {color:var(--gold);margin-right:9px}
 .order-form {
   background:#fff;color:var(--text);
   border-radius:18px;padding:28px;
@@ -758,21 +886,16 @@ footer {
   .menu-toggle {display:block}
   .nav-button {display:none}
   .hero-grid,.story-grid,.order-grid {grid-template-columns:1fr}
+  .story-grid {padding:14px;gap:14px}
+  .story-text {padding:24px}
   .hero {padding:55px 0}
-  .service-grid {grid-template-columns:repeat(2,1fr)}
-  .featured-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
-  .why-grid {grid-template-columns:repeat(2,1fr)}
-  .steps {grid-template-columns:repeat(2,1fr)}
   .order-grid {gap:30px}
 }
 @media(max-width:540px) {
   .hero h1,.hero-headline-copy {letter-spacing:-1.7px}
   .hero-search {gap:5px}
-  .hero-search button {padding:12px 13px}
-  .service-grid {grid-template-columns:1fr}
-  .featured-grid {grid-template-columns:1fr}
-  .why-grid {grid-template-columns:1fr 1fr}
-  .steps {grid-template-columns:1fr 1fr}
+  .hero-search .search-box {min-height:46px;padding:11px 3px;font-size:13px}
+  .hero-search button {min-height:46px;padding:0 14px}
   .form-grid {grid-template-columns:1fr}
   .form-group.full {grid-column:auto}
   .payment-options {grid-template-columns:1fr}
@@ -780,7 +903,9 @@ footer {
   .qris-preview {width:min(220px,100%);min-height:220px;margin:auto}
   .qris-preview img {max-height:220px}
   .order-form {padding:20px}
+  .story-grid {padding:10px;gap:10px}
   .story-visual {padding:25px;min-height:280px}
+  .story-text {padding:20px}
   .footer-grid {grid-template-columns:1fr 1fr}
   .footer-grid > div:first-child {grid-column:1/-1}
   .cta h2 {font-size:25px}
@@ -813,7 +938,6 @@ footer {
       <a href="#">Home</a>
       <a href="#layanan">Layanan</a>
       <a href="#tentang">Tentang Kami</a>
-      <a href="#cara-order">Cara Order</a>
       <a href="#faq">FAQ</a>
     </nav>
 
@@ -829,14 +953,14 @@ footer {
       <div class="eyebrow"><i></i><span id="heroEyebrowText">PROMO TERBATAS</span></div>
       <div class="hero-headline-marquee">
         <div class="hero-headline-track">
-          <h1 id="heroHeadline">Joki Skripsi Sekarang, <span>Hemat Rp.1 juta!</span></h1>
-          <div class="hero-headline-copy" aria-hidden="true">Joki Skripsi Sekarang, <span>Hemat Rp.1 juta!</span></div>
+          <h1 id="heroHeadline">JOKI SKRIPSIMU SEKARANG, <span>HEMAT Rp.1 juta!</span></h1>
+          <div class="hero-headline-copy" aria-hidden="true">JOKI SKRIPSIMU SEKARANG, <span>HEMAT Rp.1 juta!</span></div>
         </div>
       </div>
       <p class="hero-desc" id="heroDescription">
-        Selain promo pendampingan skripsi, tersedia juga bantuan artikel jurnal
-        SINTA 2, 3, 4, dan 5 serta berbagai tugas kuliah lainnya. Konsultasikan
-        kebutuhanmu bersama RUMAH JOKI sebelum memesan.
+        Selain <strong data-hero-promo-label>promo pendampingan Skripsi</strong>, tersedia juga bantuan
+        <strong>Artikel Jurnal SINTA 2, 3, 4, dan 5</strong> serta
+        <strong>berbagai tugas kuliah lainnya</strong>. Konsultasikan kebutuhanmu bersama RUMAH JOKI!
       </p>
       <form class="hero-search" id="serviceSearchForm" role="search">
         <svg class="hero-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -846,7 +970,8 @@ footer {
         <input class="search-box" type="search" id="serviceSearch" aria-label="Cari layanan" placeholder="Cari makalah, skripsi, jurnal...">
         <button type="submit">Cari</button>
       </form>
-      <div class="promo-card promo-card-sinta mx-auto mt-4" aria-label="Promo jurnal SINTA 2: dari Rp8.000.000 menjadi Rp7.400.000">
+      <div class="promo-carousel" role="region" aria-label="Daftar promo, geser ke samping untuk melihat promo lainnya" tabindex="0">
+      <div class="promo-card promo-card-sinta" aria-label="Promo jurnal SINTA 2: dari Rp8.000.000 menjadi Rp7.400.000">
         <div class="promo-orbit promo-orbit-large" aria-hidden="true"></div>
         <div class="promo-orbit promo-orbit-small" aria-hidden="true"></div>
         <div class="promo-content">
@@ -858,7 +983,7 @@ footer {
           <span class="promo-caption">Diskusikan kebutuhan publikasi dan naskah sebelum memesan.</span>
         </div>
         <div class="promo-pricing">
-          <span class="promo-price-kicker">Harga spesial sekarang</span>
+          <span class="promo-price-kicker">Harga Spesial Sekarang</span>
           <ins class="promo-new-price text-decoration-none">Rp7.400.000</ins>
           <div class="promo-price-compare">
             <span>Harga normal</span>
@@ -877,22 +1002,22 @@ footer {
           <button type="button" class="promo-order-now" data-service-name="Publikasi SINTA 2">Order Now ↗</button>
         </div>
       </div>
-      <div class="promo-card mx-auto mt-3" aria-label="Promo layanan skripsi: dari Rp4.000.000 menjadi Rp3.000.000">
+      <div class="promo-card" aria-label="Promo layanan skripsi: dari Rp4.000.000 menjadi Rp3.000.000">
         <div class="promo-orbit promo-orbit-large" aria-hidden="true"></div>
         <div class="promo-orbit promo-orbit-small" aria-hidden="true"></div>
         <div class="promo-content">
           <span class="promo-label">
             <span class="promo-dot rounded-circle"></span>
-            <span class="promo-label-text">Promo layanan skripsi</span>
+            <span class="promo-label-text">Promo Layanan Skripsi</span>
           </span>
           <strong class="promo-title" data-expired-title="Pendampingan skripsi">Harga spesial untuk pendampingan skripsi</strong>
           <span class="promo-caption">Diskusikan kebutuhanmu sebelum memesan.</span>
         </div>
         <div class="promo-pricing">
-          <span class="promo-price-kicker">Harga spesial sekarang</span>
+          <span class="promo-price-kicker">Harga Spesial Sekarang</span>
           <ins class="promo-new-price text-decoration-none">Rp3.000.000</ins>
           <div class="promo-price-compare">
-            <span>Harga normal</span>
+            <span>Harga Normal</span>
             <del class="promo-old-price">Rp4.000.000</del>
           </div>
           <span class="promo-savings">HEMAT 25% · Rp1 Juta</span>
@@ -908,22 +1033,22 @@ footer {
           <button type="button" class="promo-order-now" data-service-name="Skripsi sampai ACC">Order Now ↗</button>
         </div>
       </div>
-      <div class="promo-card promo-card-journal mx-auto mt-3" aria-label="Promo jurnal skripsi: dari Rp100.000 menjadi Rp50.000">
+      <div class="promo-card promo-card-journal" aria-label="Promo jurnal skripsi: dari Rp100.000 menjadi Rp50.000">
         <div class="promo-orbit promo-orbit-large" aria-hidden="true"></div>
         <div class="promo-orbit promo-orbit-small" aria-hidden="true"></div>
         <div class="promo-content">
           <span class="promo-label">
             <span class="promo-dot rounded-circle"></span>
-            <span class="promo-label-text">Promo jurnal skripsi</span>
+            <span class="promo-label-text">Promo Jurnal Skripsi</span>
           </span>
           <strong class="promo-title" data-expired-title="Pendampingan jurnal skripsi">Diskon pendampingan jurnal skripsi</strong>
           <span class="promo-caption">Diskusikan kebutuhan artikelmu sebelum memesan.</span>
         </div>
         <div class="promo-pricing">
-          <span class="promo-price-kicker">Harga spesial sekarang</span>
+          <span class="promo-price-kicker">Harga Spesial Sekarang</span>
           <ins class="promo-new-price text-decoration-none">Rp50.000</ins>
           <div class="promo-price-compare">
-            <span>Harga normal</span>
+            <span>Harga Normal</span>
             <del class="promo-old-price">Rp100.000</del>
           </div>
           <span class="promo-savings">HEMAT 50% · Rp50.000</span>
@@ -939,11 +1064,12 @@ footer {
           <button type="button" class="promo-order-now" data-service-name="Artikel Jurnal Ilmiah">Order Now ↗</button>
         </div>
       </div>
+      </div>
       <div class="hero-actions">
         <a href="#layanan" class="btn-primary">Jelajahi Layanan ↗</a>
         <a href="#tentang" class="btn-secondary">Kenali Kami</a>
       </div>
-      <div class="hero-note">✦ Khusus mahasiswa <strong>Institut Agama Islam Natuna</strong></div>
+      <div class="hero-note">Khusus mahasiswa <strong>Institut Agama Islam Natuna</strong></div>
     </div>
   </div>
 </section>
@@ -952,11 +1078,49 @@ footer {
 <section class="featured-services" id="layanan-unggulan">
   <div class="container">
     <div class="section-heading">
-      <div class="label">Layanan unggulan</div>
-      <h2>Butuh bantuan untuk penelitian atau laporan?</h2>
+      <div class="label">Layanan Unggulan</div>
+      <h2>Butuh bantuan untuk Penelitian atau Laporan?</h2>
       <p>Pilih layanan yang sering dibutuhkan mahasiswa, lalu konsultasikan detailnya sebelum memesan.</p>
     </div>
-    <div class="featured-grid" id="featuredServiceGrid"></div>
+    <div class="featured-grid" id="featuredServiceGrid" role="region" aria-label="Layanan unggulan, geser ke samping untuk melihat layanan lainnya" tabindex="0"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section section-soft" id="layanan">
+  <div class="container">
+    <div class="section-heading">
+      <div class="label">Katalog Layanan</div>
+      <h2>Apa yang sedang kamu butuhkan?</h2>
+      <p>Pilih layanan yang sesuai dengan kebutuhan akademikmu. Belum tahu harus memilih yang mana? Hubungi kami untuk konsultasi terlebih dahulu.</p>
+    </div>
+
+    <div class="service-toolbar">
+      <div>
+        <div class="label">Hasil layanan</div>
+        <p class="catalog-hint">Gunakan kolom pencarian di bagian atas untuk menyaring layanan.</p>
+      </div>
+      <div class="catalog-tools">
+        <span class="result-count" id="resultCount" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="filter-btn active" type="button" data-category="semua" aria-pressed="true">Semua <span class="filter-count"></span></button>
+      <button class="filter-btn" type="button" data-category="tugas" aria-pressed="false">Tugas Kuliah <span class="filter-count"></span></button>
+      <button class="filter-btn" type="button" data-category="penelitian" aria-pressed="false">Penelitian <span class="filter-count"></span></button>
+      <button class="filter-btn" type="button" data-category="skripsi" aria-pressed="false">Skripsi & Jurnal <span class="filter-count"></span></button>
+      <button class="filter-btn" type="button" data-category="pendidikan" aria-pressed="false">Pendidikan <span class="filter-count"></span></button>
+      <button class="filter-btn" type="button" data-category="desain" aria-pressed="false">Desain <span class="filter-count"></span></button>
+      <button class="filter-btn" type="button" data-category="lainnya" aria-pressed="false">Lainnya <span class="filter-count"></span></button>
+    </div>
+
+    <div class="service-grid" id="serviceGrid"></div>
+    <div class="empty-state" id="emptyState">
+      <strong>Layanan belum ditemukan</strong>
+      <p>Coba kata kunci lain atau tampilkan kembali semua layanan.</p>
+      <button class="reset-catalog" id="resetCatalog" type="button">Tampilkan semua layanan</button>
+    </div>
   </div>
 </section>
 
@@ -1001,78 +1165,6 @@ footer {
   </div>
 </section>
 
-<!-- SERVICES -->
-<section class="section section-soft" id="layanan">
-  <div class="container">
-    <div class="section-heading">
-      <div class="label">Katalog layanan</div>
-      <h2>Apa yang sedang kamu butuhkan?</h2>
-      <p>Pilih layanan yang sesuai dengan kebutuhan akademikmu. Belum tahu harus memilih yang mana? Hubungi kami untuk konsultasi terlebih dahulu.</p>
-    </div>
-
-    <div class="service-toolbar">
-      <div>
-        <div class="label">Hasil layanan</div>
-        <p class="catalog-hint">Gunakan kolom pencarian di bagian atas untuk menyaring layanan.</p>
-      </div>
-      <div class="catalog-tools">
-        <span class="result-count" id="resultCount" aria-live="polite"></span>
-      </div>
-    </div>
-
-    <div class="filters" id="filters">
-      <button class="filter-btn active" type="button" data-category="semua" aria-pressed="true">Semua <span class="filter-count"></span></button>
-      <button class="filter-btn" type="button" data-category="tugas" aria-pressed="false">Tugas Kuliah <span class="filter-count"></span></button>
-      <button class="filter-btn" type="button" data-category="penelitian" aria-pressed="false">Penelitian <span class="filter-count"></span></button>
-      <button class="filter-btn" type="button" data-category="skripsi" aria-pressed="false">Skripsi & Jurnal <span class="filter-count"></span></button>
-      <button class="filter-btn" type="button" data-category="pendidikan" aria-pressed="false">Pendidikan <span class="filter-count"></span></button>
-      <button class="filter-btn" type="button" data-category="desain" aria-pressed="false">Desain <span class="filter-count"></span></button>
-      <button class="filter-btn" type="button" data-category="lainnya" aria-pressed="false">Lainnya <span class="filter-count"></span></button>
-    </div>
-
-    <div class="service-grid" id="serviceGrid"></div>
-    <div class="empty-state" id="emptyState">
-      <strong>Layanan belum ditemukan</strong>
-      <p>Coba kata kunci lain atau tampilkan kembali semua layanan.</p>
-      <button class="reset-catalog" id="resetCatalog" type="button">Tampilkan semua layanan</button>
-    </div>
-  </div>
-</section>
-
-<!-- WHY US -->
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <div class="label">Kenapa RUMAH JOKI?</div>
-      <h2>Lebih dari sekadar tempat memesan layanan.</h2>
-      <p>Kami mengutamakan komunikasi dan kejelasan kebutuhan sebelum layanan dimulai.</p>
-    </div>
-    <div class="why-grid">
-      <div class="why-card"><div>💬</div><h3>Konsultasi Awal</h3><p>Ceritakan kebutuhanmu terlebih dahulu agar layanan yang dipilih sesuai dengan keperluan.</p></div>
-      <div class="why-card"><div>📋</div><h3>Layanan Beragam</h3><p>Berbagai kebutuhan akademik tersedia dalam satu tempat.</p></div>
-      <div class="why-card"><div>🤝</div><h3>Komunikatif</h3><p>Proses komunikasi dilakukan secara langsung melalui WhatsApp.</p></div>
-      <div class="why-card"><div>🎯</div><h3>Sesuai Kebutuhan</h3><p>Detail, ruang lingkup, dan biaya dibicarakan sebelum layanan disepakati.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW TO ORDER -->
-<section class="section section-soft" id="cara-order">
-  <div class="container">
-    <div class="section-heading">
-      <div class="label">Proses pemesanan</div>
-      <h2>Mulai dari empat langkah sederhana.</h2>
-      <p>Tidak perlu bingung. Proses konsultasi dan pemesanan dibuat sesederhana mungkin.</p>
-    </div>
-    <div class="steps">
-      <div class="step"><div class="step-number">01</div><h3>Pilih Layanan</h3><p>Temukan layanan yang sesuai dengan kebutuhan akademikmu.</p></div>
-      <div class="step"><div class="step-number">02</div><h3>Isi Formulir</h3><p>Masukkan identitas, semester, deadline, dan detail kebutuhan.</p></div>
-      <div class="step"><div class="step-number">03</div><h3>Konsultasi</h3><p>Diskusikan ruang lingkup layanan, biaya, dan waktu pengerjaan.</p></div>
-      <div class="step"><div class="step-number">04</div><h3>Konfirmasi</h3><p>Layanan dimulai setelah detail dan kesepakatan dikonfirmasi.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- ORDER FORM -->
 <section class="section order-section" id="pesan">
   <div class="container order-grid">
@@ -1080,11 +1172,6 @@ footer {
       <div class="label" style="color:var(--gold)">Mulai konsultasi</div>
       <h2>Ada tugas yang ingin kamu diskusikan?</h2>
       <p>Isi formulir di samping. Setelah menekan tombol, kamu akan diarahkan ke WhatsApp RUMAH JOKI dengan pesan yang sudah disiapkan.</p>
-      <div class="order-benefit">
-        <div><span>✓</span> Konsultasikan kebutuhanmu terlebih dahulu.</div>
-        <div><span>✓</span> Diskusikan harga dan estimasi waktu.</div>
-        <div><span>✓</span> Kirim dokumen pendukung langsung melalui WhatsApp.</div>
-      </div>
     </div>
 
     <form class="order-form" id="orderForm">
@@ -1239,7 +1326,6 @@ footer {
         <h4>Jelajahi</h4>
         <a href="#layanan">Katalog Layanan</a>
         <a href="#tentang">Tentang Kami</a>
-        <a href="#cara-order">Cara Pemesanan</a>
         <a href="#faq">Pertanyaan Umum</a>
       </div>
       <div class="footer-col">
@@ -1341,6 +1427,14 @@ const empty = document.getElementById("emptyState");
 const resultCount = document.getElementById("resultCount");
 const select = document.getElementById("layananPilihan");
 let activeCategory = "semua";
+const serviceCategoryLabels = {
+  tugas:"Tugas Kuliah",
+  penelitian:"Penelitian",
+  skripsi:"Skripsi & Jurnal",
+  pendidikan:"Pendidikan",
+  desain:"Desain",
+  lainnya:"Lainnya"
+};
 
 function renderFeaturedServices() {
   const featuredServices = services
@@ -1388,21 +1482,38 @@ function renderServices() {
     return categoryMatch && keywordMatch;
   });
 
-  grid.innerHTML = filtered.map(s => `
-    <article class="service-card" data-category="${s.category}">
-      <div class="service-top">
-        <div class="service-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${serviceIcons[s.icon]}</svg>
-        </div>
-        <span class="service-tag">${s.tag}</span>
+  const groupedServices = Object.keys(serviceCategoryLabels)
+    .map(category => ({
+      category,
+      services: filtered.filter(service => service.category === category)
+    }))
+    .filter(group => group.services.length);
+
+  grid.innerHTML = groupedServices.map(group => `
+    <section class="service-group">
+      <div class="service-group-heading">
+        <h3>${serviceCategoryLabels[group.category]}</h3>
+        <span>${group.services.length} layanan</span>
       </div>
-      <h3>${s.name}</h3>
-      <p>${s.desc}</p>
-      <div class="service-bottom">
-        <div class="price">Mulai dari<strong>${s.price}</strong></div>
-        <button type="button" class="order-small" onclick="chooseService('${s.name.replace(/'/g,"\\'")}')">Pilih ↗</button>
+      <div class="service-row" role="region" aria-label="${serviceCategoryLabels[group.category]}, geser ke samping untuk melihat layanan" tabindex="0">
+        ${group.services.map(s => `
+          <article class="service-card" data-category="${s.category}">
+            <div class="service-top">
+              <div class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${serviceIcons[s.icon]}</svg>
+              </div>
+              <span class="service-tag">${s.tag}</span>
+            </div>
+            <h4>${s.name}</h4>
+            <p>${s.desc}</p>
+            <div class="service-bottom">
+              <div class="price">Mulai dari<strong>${s.price}</strong></div>
+              <button type="button" class="order-small" onclick="chooseService('${s.name.replace(/'/g,"\\'")}')">Pilih ↗</button>
+            </div>
+          </article>
+        `).join("")}
       </div>
-    </article>
+    </section>
   `).join("");
 
   empty.style.display = filtered.length ? "none" : "block";
@@ -1490,10 +1601,9 @@ function expirePromos() {
   });
 
   document.getElementById("heroEyebrowText").textContent = "LAYANAN AKADEMIK";
+  document.querySelector("[data-hero-promo-label]").textContent = "pendampingan Skripsi";
   document.getElementById("heroHeadline").textContent = "Pendampingan Akademik untuk Kebutuhanmu";
   document.querySelector(".hero-headline-copy").textContent = "Pendampingan Akademik untuk Kebutuhanmu";
-  document.getElementById("heroDescription").textContent =
-    "Tersedia pendampingan artikel jurnal SINTA 2, 3, 4, dan 5 serta berbagai tugas kuliah lainnya. Konsultasikan kebutuhanmu bersama RUMAH JOKI sebelum memesan.";
 }
 
 function updatePromoCountdown() {
@@ -1525,7 +1635,7 @@ if (updatePromoCountdown()) {
 }
 
 const revealTargets = document.querySelectorAll(
-  ".hero-grid > *, .featured-service-card, .story-grid > *, .section-heading, .service-toolbar, .why-card, .step, .order-info, .order-form, .faq-item, .cta-box"
+  ".hero-grid > *, .featured-service-card, .story-grid > *, .section-heading, .service-toolbar, .order-info, .order-form, .faq-item, .cta-box"
 );
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver((entries, observer) => {
