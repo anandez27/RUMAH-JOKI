@@ -358,7 +358,7 @@ button,input,select,textarea {font:inherit}
     linear-gradient(145deg,#0b1723 0%,#17324a 56%,#0e1e2d 100%);
 }
 .featured-grid {
-  display:flex;gap:18px;overflow-x:auto;
+  display:flex;gap:18px;overflow-x:auto;overflow-y:hidden;
   padding:8px 4px 18px;
   overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;
@@ -383,7 +383,7 @@ button,input,select,textarea {font:inherit}
   background-clip:padding-box;
 }
 .featured-grid > .featured-service-card {
-  flex:0 0 min(390px,88%);
+  flex:0 0 65%;
   scroll-snap-align:start;
 }
 .featured-service-card {
@@ -1192,7 +1192,7 @@ footer {
     <div class="order-info">
       <div class="label" style="color:var(--gold)">Mulai konsultasi</div>
       <h2>Ada tugas yang ingin kamu diskusikan?</h2>
-      <p>Isi formulir di samping. Setelah menekan tombol, kamu akan diarahkan ke WhatsApp RUMAH JOKI dengan pesan yang sudah disiapkan.</p>
+      <p>Isi formulir di bawah untuk lanjut ke WhatsApp RUMAH JOKI.</p>
     </div>
 
     <form class="order-form" id="orderForm">
