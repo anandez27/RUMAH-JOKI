@@ -199,6 +199,11 @@ button,input,select,textarea {font:inherit}
   box-shadow:0 8px 18px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.3);
 }
 .hero-search button:focus-visible {outline:3px solid rgba(241,201,106,.48);outline-offset:2px}
+.catalog-search {
+  width:min(100%,430px);max-width:430px;min-height:56px;margin:0;
+}
+.catalog-search .search-box {min-height:42px}
+.catalog-search button {min-height:42px}
 .hero-actions {display:flex;justify-content:center;gap:12px;margin-top:30px;flex-wrap:wrap}
 .btn-primary {
   background:#d1ad69;color:#101d2a;
@@ -357,11 +362,25 @@ button,input,select,textarea {font:inherit}
   padding:8px 4px 18px;
   overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;
-  scrollbar-width:none;
-  -ms-overflow-style:none;
+  scrollbar-color:#d1ad69 rgba(255,255,255,.14);
+  scrollbar-width:thin;
 }
 .featured-grid::-webkit-scrollbar {
-  display:none;
+  height:8px;
+}
+.featured-grid::-webkit-scrollbar-track {
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+}
+.featured-grid::-webkit-scrollbar-thumb {
+  border:2px solid transparent;
+  border-radius:999px;
+  background:#d1ad69;
+  background-clip:padding-box;
+}
+.featured-grid::-webkit-scrollbar-thumb:hover {
+  background:#f0d18a;
+  background-clip:padding-box;
 }
 .featured-grid > .featured-service-card {
   flex:0 0 min(390px,88%);
@@ -1080,7 +1099,6 @@ footer {
     <div class="section-heading">
       <div class="label">Layanan Unggulan</div>
       <h2>Butuh bantuan untuk Penelitian atau Laporan?</h2>
-      <p>Pilih layanan yang sering dibutuhkan mahasiswa, lalu konsultasikan detailnya sebelum memesan.</p>
     </div>
     <div class="featured-grid" id="featuredServiceGrid" role="region" aria-label="Layanan unggulan, geser ke samping untuk melihat layanan lainnya" tabindex="0"></div>
   </div>
@@ -1092,14 +1110,17 @@ footer {
     <div class="section-heading">
       <div class="label">Katalog Layanan</div>
       <h2>Apa yang sedang kamu butuhkan?</h2>
-      <p>Pilih layanan yang sesuai dengan kebutuhan akademikmu. Belum tahu harus memilih yang mana? Hubungi kami untuk konsultasi terlebih dahulu.</p>
     </div>
 
     <div class="service-toolbar">
-      <div>
-        <div class="label">Hasil layanan</div>
-        <p class="catalog-hint">Gunakan kolom pencarian di bagian atas untuk menyaring layanan.</p>
-      </div>
+      <form class="hero-search catalog-search" id="catalogSearchForm" role="search">
+        <svg class="hero-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-4-4"></path>
+        </svg>
+        <input class="search-box" type="search" id="catalogSearch" aria-label="Cari layanan di katalog" placeholder="Cari layanan di katalog...">
+        <button type="submit">Cari</button>
+      </form>
       <div class="catalog-tools">
         <span class="result-count" id="resultCount" aria-live="polite"></span>
       </div>
@@ -1423,6 +1444,7 @@ const serviceIcons = {
 const grid = document.getElementById("serviceGrid");
 const featuredGrid = document.getElementById("featuredServiceGrid");
 const search = document.getElementById("serviceSearch");
+const catalogSearch = document.getElementById("catalogSearch");
 const empty = document.getElementById("emptyState");
 const resultCount = document.getElementById("resultCount");
 const select = document.getElementById("layananPilihan");
@@ -1572,11 +1594,20 @@ document.getElementById("resetCatalog").addEventListener("click", () => {
 
 updateFilterCounts();
 renderFeaturedServices();
-search.addEventListener("input", renderServices);
+function syncSearchFields(source, target) {
+  target.value = source.value;
+  renderServices();
+}
+search.addEventListener("input", () => syncSearchFields(search, catalogSearch));
+catalogSearch.addEventListener("input", () => syncSearchFields(catalogSearch, search));
 renderServices();
 document.getElementById("serviceSearchForm").addEventListener("submit", event => {
   event.preventDefault();
   document.getElementById("layanan").scrollIntoView({behavior:"smooth"});
+});
+document.getElementById("catalogSearchForm").addEventListener("submit", event => {
+  event.preventDefault();
+  renderServices();
 });
 
 const promoDeadline = new Date("2027-01-01T12:00:00+07:00").getTime();
